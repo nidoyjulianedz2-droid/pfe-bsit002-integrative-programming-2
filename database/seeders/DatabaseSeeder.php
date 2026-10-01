@@ -11,6 +11,8 @@ class DatabaseSeeder extends Seeder
     use WithoutModelEvents;
 
     /**
+     * Seed the application's database.
+     *
      * php artisan migrate:fresh --seed
      */
     public function run(): void
@@ -18,6 +20,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            // password: "password" (from UserFactory)
         ]);
 
         $this->call([
