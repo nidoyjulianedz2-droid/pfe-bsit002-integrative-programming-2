@@ -34,7 +34,7 @@
       "name": "Week 1 - Setup",
       "item": [
         {
-          "name": "API Status (GET /)",
+          "name": "Laravel Welcome Page (GET /)",
           "request": {
             "method": "GET",
             "header": [],
@@ -59,8 +59,8 @@
                   "pm.test(\"Status code is 200\", function () {",
                   "    pm.response.to.have.status(200);",
                   "});",
-                  "pm.test(\"Server is running\", function () {",
-                  "    pm.expect(pm.response.json().status).to.eql(\"running\");",
+                  "pm.test(\"Laravel welcome page is returned\", function () {",
+                  "    pm.expect(pm.response.text()).to.include(\"Laravel\");",
                   "});"
                 ]
               }

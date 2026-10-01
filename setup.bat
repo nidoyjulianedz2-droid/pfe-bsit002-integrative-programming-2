@@ -18,6 +18,15 @@ echo [2/6] Creating .env file...
 if not exist .env copy .env.example .env >nul
 call php artisan key:generate --force
 
+echo.
+echo [2b] Adding the default Laravel welcome page (Week 1 screenshot)...
+if not exist resources\views\welcome.blade.php (
+    call composer create-project laravel/laravel _skeleton --no-install --no-scripts --quiet
+    copy /y _skeleton\resources\views\welcome.blade.php resources\views\welcome.blade.php >nul
+    rmdir /s /q _skeleton
+)
+if exist resources\views\welcome.blade.php (echo Welcome page ready.) else (echo [!] Could not add welcome page.)
+
 :checkdb
 echo.
 echo [3/6] Creating MySQL database "integrative_db"...
