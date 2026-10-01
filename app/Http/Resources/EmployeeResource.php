@@ -21,7 +21,11 @@ class EmployeeResource extends JsonResource
             'last_name' => $this->last_name,
             'full_name' => $this->first_name.' '.$this->last_name,
             'email' => $this->email,
-            'department' => $this->department,
+            'department_id' => $this->department_id,
+            'department' => $this->whenLoaded('department', fn () => [
+                'id' => $this->department->id,
+                'name' => $this->department->name,
+            ]),
             'position' => $this->position,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

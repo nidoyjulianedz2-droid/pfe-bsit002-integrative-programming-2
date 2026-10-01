@@ -37,3 +37,16 @@ On update, the rules use `sometimes`, so only the fields that are sent get valid
 **"Why is validation important in API development?"**
 
 An API cannot trust the client. Anyone can send any JSON body using Postman or a script, so the server must check the data before saving it. Validation keeps incomplete or incorrect records (missing names, invalid emails, duplicates, departments that don't exist) out of the database, and it gives the client a clear `422` response that lists exactly which fields are wrong. It is also a first layer of security, because it limits what kind of data can reach the database.
+
+---
+
+## Week 5 – Explanation of the relationship used
+I used a **One-to-Many** relationship: **a Department has many Employees**, and **an Employee belongs to a Department**.
+
+- The `employees` table has a `department_id` foreign key that references `departments.id` (`constrained()->onDelete('cascade')`).
+- In `Department.php`, `employees()` returns `$this->hasMany(Employee::class)`.
+- In `Employee.php`, `department()` returns `$this->belongsTo(Department::class)`.
+
+In the controller, `Employee::with('department')` eager-loads the department of every employee in one extra query instead of one query per employee, so each employee in the response includes its department name. `GET /api/departments/{id}` does the reverse and shows a department with all its employees.
+
+The index endpoint also uses `paginate(10)` to return only 10 records per page, `?search=` to look for a keyword in first name, last name, or email, and `?department_id=` / `?department=` to filter by department.

@@ -13,7 +13,9 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
-            $table->string('department');
+            // Week 5: the "department" text column was replaced by a foreign key
+            // so that Employee belongs to Department.
+            $table->foreignId('department_id')->constrained()->onDelete('cascade');
             $table->string('position');
             $table->timestamps();
         });
