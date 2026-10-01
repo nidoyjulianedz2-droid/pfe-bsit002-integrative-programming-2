@@ -20,3 +20,20 @@ I need to get more comfortable with Composer and the Artisan commands (`make:mod
 - **Response body:** a JSON array of two student objects, each with `id`, `name`, and `course`
 
 The data is hard-coded for now; in later weeks the data comes from the database through Eloquent.
+
+---
+
+## Week 4 – Validation rules used
+| Field | Rule | Why |
+|---|---|---|
+| first_name, last_name | `required\|string\|max:100` | Every employee needs a name; the length limit protects the column size |
+| email | `required\|email\|unique:employees,email` | Must be a real email format and no two employees can share one |
+| department_id | `required\|integer\|exists:departments,id` | The employee must be linked to a department that actually exists |
+| position | `required\|string\|max:100` | Job title is required for every employee |
+
+On update, the rules use `sometimes`, so only the fields that are sent get validated. The unique email rule ignores the current employee's own id (`unique:employees,email,{id}`) so an employee can be saved without changing their email.
+
+## Week 4 – Reflection
+**"Why is validation important in API development?"**
+
+An API cannot trust the client. Anyone can send any JSON body using Postman or a script, so the server must check the data before saving it. Validation keeps incomplete or incorrect records (missing names, invalid emails, duplicates, departments that don't exist) out of the database, and it gives the client a clear `422` response that lists exactly which fields are wrong. It is also a first layer of security, because it limits what kind of data can reach the database.
